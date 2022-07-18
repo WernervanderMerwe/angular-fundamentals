@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 import { Passenger } from './models/passenger.interface';
+import { toPromise } from 'rxjs/operator/toPromise';
 
 
 
@@ -14,12 +15,13 @@ const PASSENGER_API: string = '/api/passengers';
 export class PassengerDashboardService {
   constructor(private http: Http) {}
 
-  getPassengers(): Observable<Passenger[]> {
+  getPassengers(): Promise<Passenger[]> {
     return this.http
     .get(PASSENGER_API)
-    .map((response: Response) => response.json());
+    .toPromise()
+    .then((response: Response) => response.json());
   }
-  updatePassenger(passenger: Passenger): Observable<Passenger> {
+  updatePassenger(passenger: Passenger): Promise<Passenger> {
     let headers = new Headers({
       'Content-Type': 'application/json'
     })
@@ -28,11 +30,13 @@ export class PassengerDashboardService {
     })
     return this.http
     .put(`${PASSENGER_API}/${passenger.id}`, passenger, options)
-    .map((response: Response) => response.json());
+    .toPromise()
+    .then((response: Response) => response.json());
   }
-  removePassenger(passenger: Passenger): Observable<Passenger> {
+  removePassenger(passenger: Passenger): Promise<Passenger> {
     return this.http
     .delete(`${PASSENGER_API}/${passenger.id}`)
-    .map((response: Response) => response.json());
+    .toPromise()
+    .then((response: Response) => response.json());
   }
 }
