@@ -15,7 +15,13 @@ import { Passenger } from '../../models/passenger.interface';
         <input
           type="text"
           name="fullname"
+          required
+          #fullname="ngModel"
           [ngModel]="detail?.fullname">
+
+          <div *ngIf="fullname.errors?.required && fullname.dirty" class="error"> <!-- dirty form validation -->
+          Passenger name is required
+        </div>
       </div>
 
       <div>
@@ -23,7 +29,13 @@ import { Passenger } from '../../models/passenger.interface';
         <input
           type="number"
           name="id"
+          required
+          #id="ngModel"
           [ngModel]="detail?.id">
+
+          <div *ngIf="id.errors?.required && id.touched" class="error"> <!-- touched form validation -->
+          Passenger ID is required
+        </div>
       </div>
 
       <div>
@@ -56,18 +68,11 @@ import { Passenger } from '../../models/passenger.interface';
             {{ item.value }}
           </option>
         </select>
-        <select
-          name="baggage"
-          [ngModel]="detail?.baggage">
-          <option
-            *ngFor="let item of baggage"
-            [ngValue]="item.key">
-            {{ item.value }}
-          </option>
-        </select>
       </div>
 
-      {{ form.value | json }}
+      <div>{{ form.value | json }}</div>
+      <div>Valid: {{ form.valid | json }}</div>
+      <div>Invalid: {{ form.invalid | json }}</div>
     </form>
   `
 })
