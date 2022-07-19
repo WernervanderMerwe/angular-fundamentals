@@ -11,7 +11,6 @@ interface Nav {
   styleUrls: ['app.component.scss'],
   template: `
     <div class="app">
-      <!-- <passenger-viewer></passenger-viewer> without router -->
       <nav class="nav">
         <a
           *ngFor="let item of nav"
@@ -34,7 +33,7 @@ export class AppComponent {
     },
     {
       link: '/passengers',
-      name: 'passengers',
+      name: 'Passengers',
       exact: true
     },
     {
